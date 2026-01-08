@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        // Your code goes here
+        int index = -1;
+        int n =nums.size();
+        //we are taking from n-2 becuse the first deep will come from this point
+        for(int i=n-2;i>=0;i--)
+        {
+            if(nums[i]<nums[i+1])
+            {
+                index = i;
+                break;
+            }
+        }
+        //edge case in which number are in already in lexigraphical order ex:1 2 3 4 5 then we just have to reverse them
+        if(index == -1)
+        {
+            reverse(nums.begin(),nums.end());
+            return;
+        }
+        //in the below step we will get the second fixed number
+        for(int i=n-1;i>index;i--)
+        {
+            if(nums[i]>nums[index])
+            {
+                swap(nums[i],nums[index]);
+                break;
+            }
+        }
+
+        //for the remaining ones we just need to sort them so that we will get the lowest number in the end
+        reverse(nums.begin()+index+1,nums.end());
+    }
+};

@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int sum =0,max=INT_MIN;
+
+        for(int i=0;i<nums.size();i++)
+        {
+            sum+=nums[i];
+
+            if(sum>max)
+            {
+                max=sum;
+            }
+            //we are doing this because if sum is negative number it will reduce the value not able to increase that, this is kadens algorithm
+            if(sum<0)
+            {
+                sum=0;
+            }
+        }
+        return max;
+        
+    }
+};

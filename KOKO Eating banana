@@ -1,0 +1,47 @@
+class Solution {
+public:
+long long timeTaking(vector<int> nums,int ban,int h)
+{
+    long long ans=0;
+    for(int i=0;i<nums.size();i++)
+    {
+        ans+=ceil((double)nums[i]/(double)ban);
+    }
+    return ans;
+}
+int minEating(vector<int> nums,int min,int max,int hour)
+{
+    while(min<=max)
+    {
+        int mid=(min+max)/2;
+        long long t=timeTaking(nums,mid,hour);
+        if(t>hour)
+        {
+            min=mid+1;
+        }
+        else
+        {
+            max=mid-1;
+        }
+    }
+    return min;
+}
+int maxElement(vector<int> nums)
+{
+    int maxi=INT_MIN;
+    for(int i=0;i<nums.size();i++)
+    {
+        if(nums[i]>maxi)
+        {
+            maxi=nums[i];
+        }
+    }
+    return maxi;
+}
+int minimumRateToEatBananas(vector<int> nums, int h) {
+    int n=maxElement(nums);
+    int ans=minEating(nums,1,n,h);
+    return ans;
+ 
+    }
+};

@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool isPossible(vector<int> nums,int dist,int cow)
+    {
+        int start=0,last=nums[0],countCow=1;
+        for(int i=1;i<nums.size();i++)
+        {
+            if(nums[i]-last>=dist)
+            {
+                countCow++;
+                last=nums[i];
+            }
+        }
+        if(countCow>=cow)
+        {
+            return true;
+        }
+        return false;
+    }
+    int binarySerach(vector<int> nums,int min,int max,int cow)
+    {
+        
+        while(min<=max)
+        {
+            int mid=(min+max)/2;
+            if(isPossible(nums,mid,cow)== true)
+            {
+                min=mid+1;
+            }
+            else
+            {
+                max=mid-1;
+            }
+        }
+        return max;
+    }
+    int aggressiveCows(vector<int> &nums, int k) {
+        sort(nums.begin(),nums.end());
+        int min=0,max=nums[nums.size()-1] - nums[0];
+        int ans=binarySerach(nums,min,max,k);
+        return ans;
+        
+    }
+};

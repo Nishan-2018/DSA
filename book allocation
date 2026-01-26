@@ -1,0 +1,60 @@
+class Solution {
+public:
+
+    // Check how many students are needed if max pages per student = mid
+    int isPossible(vector<int> &nums, int mid) {
+        int students = 1;
+        int pageCount = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+            if (pageCount + nums[i] <= mid) {
+                pageCount += nums[i];
+            } else {
+                students++;
+                pageCount = nums[i];
+            }
+        }
+
+        return students;
+    }
+
+    int sumation(vector<int> &nums) {
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
+        }
+        return sum;
+    }
+
+    int findMax(vector<int> &nums) {
+        int maximum = INT_MIN;
+        for (int i = 0; i < nums.size(); i++) {
+            maximum = max(maximum, nums[i]);
+        }
+        return maximum;
+    }
+
+    int findPages(vector<int> &nums, int m) {
+
+        if (m > nums.size()) return -1;
+
+        int low = findMax(nums);      // minimum possible answer
+        int high = sumation(nums);    // maximum possible answer
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            int requiredStudents = isPossible(nums, mid);
+
+            if (requiredStudents <= m) {
+                ans = mid;        // possible answer
+                high = mid - 1;   // try smaller value
+            } else {
+                low = mid + 1;    // need more pages
+            }
+        }
+
+        return ans;
+    }
+};

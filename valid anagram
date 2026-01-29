@@ -1,0 +1,25 @@
+class Solution{	
+	public:
+		bool anagramStrings(string& s,string t){
+			int freqs[26]={0};
+			int freqt[26]={0};
+			//your code goes here
+			if(s.size()!=t.size())
+			{
+				return false;
+			}
+			for(int i=0;i<s.size();i++)
+			{
+				freqs[s[i] - 'a']++;
+				freqt[t[i] - 'a']++;
+			}
+			for(int i=0;i<25;i++)
+			{
+				if(freqs[i]!=freqt[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+};

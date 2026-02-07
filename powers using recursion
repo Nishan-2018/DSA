@@ -1,0 +1,31 @@
+class Solution {
+public:	
+    void func(int ind, int n, vector<int> &nums, vector<int> &arr, vector<vector<int>> &ans)
+    {
+        //base case: if the index reach the length of the array
+        //add the current subset to the answer list
+        if(ind == n)
+        {
+            ans.push_back(arr);
+            return;
+        }
+
+        //recursive case: Exclude the current elemnt and move to the next element
+        func(ind + 1,n,nums, arr, ans);
+
+        //include the current element in the subset and  move to the next eelemnt
+        arr.push_back(nums[ind]);
+        func(ind+1,n,nums,arr,ans);
+
+        //backtrack: remove the last added element to explore othrt subsets
+        arr.pop_back();
+    }
+    vector<vector<int> > powerSet(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> arr;
+
+        func(0, nums.size(), nums, arr, ans);
+        return ans;
+
+    }
+};

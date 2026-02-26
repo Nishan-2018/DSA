@@ -1,0 +1,9 @@
+class Solution {
+public:
+    // Method to check if a unique binary tree can be constructed
+    bool uniqueBinaryTree(int a, int b) {
+        // Return false if both traversals are the same 
+        // or if they are preorder and postorder
+        return !(a == b || (a == 1 && b == 3) || (a == 3 && b == 1));
+    }
+};

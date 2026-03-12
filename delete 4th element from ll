@@ -1,0 +1,55 @@
+class Solution {
+public:
+    // Function to remove the Kth element
+    ListNode* deleteKthElement(ListNode* head, int k) {
+        // If the list is empty, return nullptr
+        if (head == nullptr) 
+            return nullptr;
+    
+        int count = 0;
+        ListNode* kNode = head;
+
+        // Traverse the list
+        while (kNode != nullptr) {
+            count++;
+            if (count == k) break;
+            kNode = kNode->next;
+        }
+
+        // If k is larger 
+        if (kNode == nullptr) return head; 
+        
+        // Update the pointers
+        ListNode* prev = kNode->prev;
+        ListNode* front = kNode->next;
+
+        // If node to be deleted is only node in list
+        if (prev == nullptr && front == nullptr) {
+            delete kNode;
+            return nullptr;
+        }
+        
+        // If node to be deleted is head of list
+        else if (prev == nullptr) {
+            head = front;
+            front->prev = nullptr;
+        }
+        
+        // If node to be deleted is tail of list
+        else if (front == nullptr) {
+            prev->next = nullptr;
+        }
+        
+        // If node to be deleted is in middle of list
+        else {
+            prev->next = front;
+            front->prev = prev;
+        }
+
+        // Free memory of the deleted node
+        delete kNode;
+        
+        // Return modified list head
+        return head;
+    }
+};

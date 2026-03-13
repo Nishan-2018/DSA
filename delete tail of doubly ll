@@ -1,0 +1,24 @@
+class Solution {
+public:
+    // Function to delete the tail of a doubly linked list 
+    ListNode* deleteTail(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return nullptr;  
+        }
+        
+        // Navigate to the tail of the linked list
+        ListNode* tail = head;
+        while (tail->next != nullptr) 
+            tail = tail->next; 
+        
+        // Update the pointers
+        ListNode* newTail = tail->prev;
+        newTail->next = nullptr;
+        tail->prev = nullptr;
+        
+        // Free memory 
+        delete tail;  
+        
+        return head; // Return head of modified list
+    }
+};

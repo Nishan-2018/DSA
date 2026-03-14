@@ -1,0 +1,29 @@
+// Solution class
+class Solution {
+public:
+    /* Function to delete the given node 
+    from doubly linked list */
+    void deleteGivenNode(ListNode* node) {
+        ListNode* prev = node->prev;
+        ListNode* front = node->next;
+
+        // Edge case if the given node is the tail node
+        if (front == nullptr) {
+            prev->next = nullptr;
+            node->prev = nullptr;
+            delete node;
+            return;
+        }
+
+        // Disconnect node 
+        prev->next = front;
+        front->prev = prev;
+
+        // Set node's pointers to NULL
+        node->next = nullptr;
+        node->prev = nullptr;
+
+        // Free memory
+        delete node;
+    }
+};

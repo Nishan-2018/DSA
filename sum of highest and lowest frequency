@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int sumHighestAndLowestFrequency(vector<int>& nums) {
+        sort(nums.begin(), nums.end());  // जरूरी step
+
+        int maxi = 0;
+        int mini = INT_MAX;
+        int cnt = 1;
+
+        for(int i = 1; i < nums.size(); i++) {
+            if(nums[i] == nums[i-1]) {
+                cnt++;
+            } else {
+                maxi = max(maxi, cnt);
+                mini = min(mini, cnt);
+                cnt = 1;
+            }
+        }
+
+        // last group
+        maxi = max(maxi, cnt);
+        mini = min(mini, cnt);
+
+        return maxi + mini;
+    }
+};

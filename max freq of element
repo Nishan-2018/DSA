@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int mostFrequentElement(vector<int>& nums) {
+        unordered_map<int,int>cnt;
+        int maxi=0;
+        int maxele;
+        for(int i=0;i<nums.size();i++)
+        {
+            cnt[nums[i]]++;
+        }
+        for(auto it : cnt)
+        {
+            int ele = it.first;
+            int freq = it.second;
+
+            if(freq > maxi)
+            {
+                maxi = freq;
+                maxele = ele;
+            }
+            else if(freq == maxi)
+            {
+                maxele = min(maxele,ele);
+            }
+        }
+        return maxele;
+
+    }
+};

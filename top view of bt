@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int data;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *      TreeNode(int val) : data(val) , left(nullptr) , right(nullptr) {}
+ * };
+ **/
+
+class Solution{
+    public:
+    vector<int> topView(TreeNode *root){
+        //your code goes here
+        vector<int> ans;
+        if(root == nullptr)
+        {
+            return ans;
+        }
+        //map to store top view of binary tree accodint to position
+        map<int,int> mpp;
+
+        //queue is to iterate through TreeNode
+        queue<pair<TreeNode*,int>> q;
+
+        q.push({root,0});
+
+        while(!q.empty())
+        {
+            auto it=q.front();
+            q.pop();
+            TreeNode* node=it.first;
+            int posn=it.second;
+
+            //put that in the map if in that position data is not there
+            if(mpp.find(posn)==mpp.end())
+            {
+                mpp[posn]= node->data;
+            }
+            if(node->left!=nullptr)
+            {
+                q.push({node->left,posn-1});
+            }
+            if(node->right!=nullptr)
+            {
+                q.push({node->right,posn+1});
+            }
+        }
+        for(auto it:mpp)
+        {
+            ans.push_back(it.second);
+        }
+        return ans;
+    }
+};

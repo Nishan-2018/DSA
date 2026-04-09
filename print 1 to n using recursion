@@ -1,0 +1,11 @@
+class Solution {
+    void helper(int current, int n) {
+        if (current > n) return;
+        cout << current << "\n";
+        helper(current + 1, n);
+    }
+public:
+    void printNumbers(int n) {
+        helper(1, n);
+    }
+};

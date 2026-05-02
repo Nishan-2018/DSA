@@ -1,0 +1,4 @@
+char printLastchar(string& s)
+{
+  return s[s.size()-1];
+}

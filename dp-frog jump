@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int solve(int ind, vector<int>& heights, vector<int>& dp) {
+        // Base case
+        if (ind == 0) return 0; 
+        // Memoized result
+        if (dp[ind] != -1) return dp[ind]; 
+
+        int jumpOne = solve(ind - 1, heights, dp) + abs(heights[ind] - heights[ind - 1]);
+        int jumpTwo = INT_MAX;
+        if (ind > 1)
+            jumpTwo = solve(ind - 2, heights, dp) + abs(heights[ind] - heights[ind - 2]);
+        // Store and return result
+        return dp[ind] = min(jumpOne, jumpTwo); 
+    }
+
+    int frogJump(vector<int>& heights) {
+        int n = heights.size();
+        vector<int> dp(n, -1);
+        // Start solving from the last stair
+        return solve(n - 1, heights, dp); 
+    }
+};

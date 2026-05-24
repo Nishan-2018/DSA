@@ -1,0 +1,33 @@
+class Solution {
+private:
+    // Function to find the minimum path sum using memoization
+    int func(int i, int j, vector<vector<int> > &triangle, int n, vector<vector<int> > &dp) {
+        /* If the result for this cell is
+        already calculated, return it*/
+        if(dp[i][j] != -1) return dp[i][j];
+        
+        // If we're at bottom row, return value of current cell
+        if (i == n - 1)
+            return triangle[i][j];
+
+        // Calculate the sum of two possible paths
+        int down = triangle[i][j] + func(i + 1, j, triangle, n, dp);
+        int diagonal = triangle[i][j] + func(i + 1, j + 1, triangle, n, dp);
+
+        // Store the sum in dp and return it
+        return dp[i][j] = min(down, diagonal);
+   }
+public:
+    //Function to find out the minimum path sum
+    int minTriangleSum(vector<vector<int>>& triangle) {
+        // Get the number of rows in the triangle
+        int n = triangle.size();
+        
+        /* Initialize a memoization table
+        to store computed results*/
+        vector<vector<int> > dp(n, vector<int>(n, -1));
+    
+        //Return the minimum path sum
+        return func(0, 0, triangle, n, dp);
+    }
+};

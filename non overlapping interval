@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool static comp(vector<int>& val1,vector<int>& val2)
+    {
+        return val1[1] < val2[1];
+    }
+
+    int MaximumNonOverlappingIntervals(vector<vector<int>>& Intervals) {
+        //your code goes here
+        sort(Intervals.begin(),Intervals.end(),comp);
+
+        int n = Intervals.size();
+        int cnt =1;
+        int lastendtime =Intervals[0][1];
+        for(int i =1;i<n;i++)
+        {
+            if(Intervals[i][0] >= lastendtime)
+            {
+                cnt++;
+                lastendtime=Intervals[i][1];
+            }
+        }
+        return n-cnt;
+    }
+};

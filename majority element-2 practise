@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> majorityElementTwo(vector<int>& nums) {
+        unordered_map<int, int> count;
+        vector<int> ans;
+
+        for (int num : nums) {
+            count[num]++;
+        }
+
+        int limit = nums.size() / 3;
+
+        for (auto &it : count) {
+            if (it.second > limit) {
+                ans.push_back(it.first);
+            }
+        }
+
+        return ans;
+    }
+};

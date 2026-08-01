@@ -1,0 +1,49 @@
+class Solution {
+public:
+    ListNode* sortList(ListNode* &head) {
+
+        if(head == nullptr || head->next == nullptr)
+            return head;
+
+        int cnt0 = 0, cnt1 = 0, cnt2 = 0;
+
+        ListNode* i = head;
+
+        while(i != nullptr)
+        {
+            if(i->data == 0)
+                cnt0++;
+            else if(i->data == 1)
+                cnt1++;
+            else
+                cnt2++;
+
+            i = i->next;
+        }
+
+        i = head;
+
+        while(i != nullptr)
+        {
+            if(cnt0 > 0)
+            {
+                i->data = 0;
+                cnt0--;
+            }
+            else if(cnt1 > 0)
+            {
+                i->data = 1;
+                cnt1--;
+            }
+            else
+            {
+                i->data = 2;
+                cnt2--;
+            }
+
+            i = i->next;
+        }
+
+        return head;
+    }
+};

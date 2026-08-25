@@ -1,0 +1,52 @@
+class Solution {
+private:
+    // Direction vectors: up, left, down, right
+    vector<int> delRow = {-1, 0, 1, 0};
+    vector<int> delCol = {0, -1, 0, 1};
+
+    // Check if cell is within bounds
+    bool isValid(int i, int j, int n, int m) {
+        return i >= 0 && j >= 0 && i < n && j < m;
+    }
+
+    // DFS to explore island and encode shape
+    void dfs(int row, int col, vector<vector<int>> &grid, int baseRow, int baseCol, string &shape) {
+        int n = grid.size(), m = grid[0].size();
+
+        // Mark cell as visited
+        grid[row][col] = 0;
+
+        // Encode relative position
+        shape += to_string(row - baseRow) + "," + to_string(col - baseCol) + " ";
+
+        // Explore four directions
+        for (int d = 0; d < 4; d++) {
+            int nRow = row + delRow[d];
+            int nCol = col + delCol[d];
+            if (isValid(nRow, nCol, n, m) && grid[nRow][nCol] == 1) {
+                dfs(nRow, nCol, grid, baseRow, baseCol, shape);
+            }
+        }
+    }
+
+public:
+    // Count distinct islands
+    int countDistinctIslands(vector<vector<int>> &grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        unordered_set<string> shapes;
+
+        // Traverse the grid
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 1) {
+                    string shape = "";
+                    dfs(i, j, grid, i, j, shape);
+                    shapes.insert(shape);
+                }
+            }
+        }
+        return shapes.size();
+    }
+};
+

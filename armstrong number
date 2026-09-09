@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isArmstrong(int N) {
+        // Your code goes here
+        int n=N,i=0,exact=N,sum=0;
+        while(n!=0)
+        {
+            n=n/10;
+            i++;
+        }
+        while(N!=0)
+        {
+            int k=N%10;
+            sum+=pow(k,i);
+            N=N/10;
+        }
+        if(sum == exact)
+        {
+            return true;
+        }
+        return false;
+    }
+};

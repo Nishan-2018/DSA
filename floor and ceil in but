@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<int> floorCeilOfBST(TreeNode* root, int key) {
+        // Initialize the floor and ceil values
+        int floor = -1;
+        int ceil = -1;
+        
+        // Find the floor value
+        TreeNode* current = root;
+        while (current) {
+            if (current->data == key) {
+                floor = current->data; 
+                break;
+            } else if (current->data < key) {
+                floor = current->data; 
+                current = current->right; 
+            } else {
+                current = current->left; 
+            }
+        }
+        
+        // Find the ceil value
+        current = root;
+        while (current) {
+            if (current->data == key) {
+                ceil = current->data; 
+                break;
+            } else if (current->data > key) {
+                ceil = current->data;
+                current = current->left;
+            } else {
+                current = current->right; 
+            }
+        }
+        
+        // Return the floor and ceil values as a vector
+        return {floor, ceil};
+    }
+};

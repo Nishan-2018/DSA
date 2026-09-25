@@ -1,0 +1,23 @@
+class Solution {
+public:	
+    void powerSetHelper(int index,int size,vector<int> &nums,vector<int> &temp,vector<vector<int>> &ans)
+    {
+        if(index == size)
+        {
+            ans.push_back(temp);
+            return;
+        }
+        powerSetHelper(index+1,size,nums,temp,ans);
+        temp.push_back(nums[index]);
+        powerSetHelper(index+1,size,nums,temp,ans);
+        temp.pop_back();
+    }
+    vector<vector<int> > powerSet(vector<int>& nums) {
+        //your code goes here
+        int size=nums.size();
+        vector<int> temp;
+        vector<vector<int>> ans;
+        powerSetHelper(0,size,nums,temp,ans);
+        return ans;
+    }
+};

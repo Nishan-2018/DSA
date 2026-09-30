@@ -1,0 +1,4 @@
+recustion pattern
+fist add one base case
+post that refirextbto left side then refirext to right side
+then use popback foe backtracking

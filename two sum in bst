@@ -1,0 +1,79 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/**
+ * Definition for a binary tree node.
+ */
+struct TreeNode {
+    int data;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+class Solution {
+public:
+    bool twoSumBST(TreeNode* root, int k) {
+        // Get sorted list of elements from BST
+        vector<int> sorted_elements = inorderTraversal(root);
+
+        // Initialize two pointers
+        int left = 0, right = sorted_elements.size() - 1;
+
+        // Use two pointers to find if there is a pair with sum k
+        while (left < right) {
+            int current_sum = sorted_elements[left] + sorted_elements[right];
+            if (current_sum == k) {
+                return true;
+            } else if (current_sum < k) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return false;
+    }
+
+private:
+    // Helper function to perform inorder traversal and get sorted elements
+    vector<int> inorderTraversal(TreeNode* node) {
+        vector<int> elements;
+        inorderHelper(node, elements);
+        return elements;
+    }
+
+    // Recursive helper to fill elements during inorder traversal
+    void inorderHelper(TreeNode* node, vector<int>& elements) {
+        if (!node) return;
+        inorderHelper(node->left, elements);
+        elements.push_back(node->data);
+        inorderHelper(node->right, elements);
+    }
+};
+
+// Main method to test the solution
+int main() {
+    // Example tree: [5, 3, 6, 2, 4, nullptr, 7]
+    TreeNode* root = new TreeNode(5);
+    root->left = new TreeNode(3);
+    root->right = new TreeNode(6);
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(4);
+    root->right->right = new TreeNode(7);
+
+    int k = 9;
+    Solution solution;
+    bool result = solution.twoSumBST(root, k);
+    cout << (result ? "True" : "False") << endl;  // Output: True
+
+    // Clean up memory
+    delete root->right->right;
+    delete root->left->right;
+    delete root->left->left;
+    delete root->right;
+    delete root->left;
+    delete root;
+
+    return 0;
+}

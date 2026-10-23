@@ -1,0 +1,30 @@
+class Solution {
+public:
+    // Helper function to validate BST and get the size of the subtree.
+    tuple<int, bool, int, int> isBSTAndSize(TreeNode* node, int minValue, int maxValue) {
+        // Base case: if node is nullptr, it is a valid BST of size 0.
+        if (!node) {
+            return make_tuple(0, true, INT_MAX, INT_MIN);
+        }
+
+        // Recursively check the left and right subtrees.
+        auto [leftSize, isLeftBST, leftMin, leftMax] = isBSTAndSize(node->left, minValue, node->data);
+        auto [rightSize, isRightBST, rightMin, rightMax] = isBSTAndSize(node->right, node->data, maxValue);
+
+        // Check if the current node is a valid BST node.
+        if (isLeftBST && isRightBST && leftMax < node->data && node->data < rightMin) {
+            // Current subtree is a valid BST, calculate its size.
+            int size = leftSize + rightSize + 1;
+            // Return size, isBST, min value, and max value for the current subtree.
+            return make_tuple(size, true, min(node->data, leftMin), max(node->data, rightMax));
+        } else {
+            // Current subtree is not a valid BST, return the size of the largest valid BST found so far.
+            return make_tuple(max(leftSize, rightSize), false, INT_MIN, INT_MAX);
+        }
+    }
+
+    int largestBST(TreeNode* root) {
+        // Initialize the function to call
+        return get<0>(isBSTAndSize(root, INT_MIN, INT_MAX));
+    }
+};

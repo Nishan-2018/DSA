@@ -1,0 +1,113 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Defines a node of the binary tree.
+struct TreeNode {
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int val) {
+        data = val;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+class Solution {
+public:
+    // Finds the path from root to the node containing x.
+    bool getPath(
+        TreeNode* root,
+        vector<TreeNode*>& path,
+        int x
+    ) {
+        // A null node cannot contain the target.
+        if (root == nullptr) {
+            return false;
+        }
+
+        path.push_back(root);
+
+        // Stop when the target node is found.
+        if (root->data == x) {
+            return true;
+        }
+
+        // Search for the target in either subtree.
+        if (getPath(root->left, path, x) ||
+            getPath(root->right, path, x)) {
+            return true;
+        }
+
+        // Remove this node if the target is not in its path.
+        path.pop_back();
+
+        return false;
+    }
+
+    // Returns the lowest common ancestor of p and q.
+    TreeNode* lca(TreeNode* root, int p, int q) {
+        vector<TreeNode*> path1;
+        vector<TreeNode*> path2;
+
+        // Both target nodes must exist in the tree.
+        if (!getPath(root, path1, p) ||
+            !getPath(root, path2, q)) {
+            return nullptr;
+        }
+
+        int i = 0;
+
+        // Move while both paths contain the same node.
+        while (i < path1.size() &&
+               i < path2.size() &&
+               path1[i] == path2[i]) {
+            i++;
+        }
+
+        // Return the actual node from the original tree.
+        return path1[i - 1];
+    }
+};
+
+int main() {
+    /*
+            3
+           / \
+          5   1
+         / \ / \
+        6  2 0  8
+          / \
+         7   4
+    */
+
+    TreeNode* root = new TreeNode(3);
+
+    root->left = new TreeNode(5);
+    root->right = new TreeNode(1);
+
+    root->left->left = new TreeNode(6);
+    root->left->right = new TreeNode(2);
+
+    root->right->left = new TreeNode(0);
+    root->right->right = new TreeNode(8);
+
+    root->left->right->left = new TreeNode(7);
+    root->left->right->right = new TreeNode(4);
+
+    int p = 5;
+    int q = 1;
+
+    Solution solution;
+
+    TreeNode* ans = solution.lca(root, p, q);
+
+    if (ans != nullptr) {
+        cout << ans->data << endl;
+    } else {
+        cout << "LCA not found" << endl;
+    }
+
+    return 0;
+}

@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<int> succPredBST(TreeNode* root, int key) {
+        vector<int> sortedList;
+        // Perform in-order traversal to get the sorted list of node values
+        inorderTraversal(root, sortedList);
+        
+        int predecessor = -1;
+        int successor = -1;
+        
+        // Find the predecessor and successor in the sorted list
+        for (int i = 0; i < sortedList.size(); i++) {
+            if (sortedList[i] < key) {
+                // Update predecessor if the current value is less than the key
+                predecessor = sortedList[i];
+            } else if (sortedList[i] > key) {
+                // Update successor if the current value is greater than the key
+                successor = sortedList[i];
+                break;  // No need to continue once successor is found
+            }
+        }
+        
+        return {predecessor, successor};
+    }
+    
+private:
+    // Helper function to perform in-order traversal
+    void inorderTraversal(TreeNode* node, vector<int>& sortedList) {
+        if (node == nullptr) {
+            return;
+        }
+        // Traverse the left subtree
+        inorderTraversal(node->left, sortedList);
+        // Add the node's value to the sortedList
+        sortedList.push_back(node->data);
+        // Traverse the right subtree
+        inorderTraversal(node->right, sortedList);
+    }
+};

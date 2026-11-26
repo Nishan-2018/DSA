@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    // Function to find the starting index of all occurrences of pattern in text
+    vector<int> search(string pat, string txt) {
+        int n = pat.length();
+        int m = txt.length();
+        
+        // List to store the result
+        vector<int> ans;
+        
+        // Traverse the text string
+        for(int i=0; i <= m-n; i++) {
+            bool flag = true;
+            
+            // Check for every character in pattern
+            for(int j=0; j < n; j++) {
+                
+                // If characters does not match
+                if(txt[i+j] != pat[j]) {
+                    flag = false; // Set the flag as false
+                    break;
+                }
+            }
+            
+            // if the pattern is found, store the index
+            if(flag) ans.push_back(i);
+        }
+        
+        return ans; // Return the stored result
+    } 
+};
+
+int main(){
+    string txt = "ababcabcababc";
+    string pat = "abc";
+    
+    // Creating an instance of Solution class
+    Solution sol; 
+    
+    /* Function call to find the starting index
+    of all occurrences of pattern in text */
+    vector<int> ans = sol.search(pat, txt);
+    
+    // Output
+    cout << "The starting indices of all occureneces of "
+         << pat << " in " << txt << " are: ";
+    for(auto it : ans) cout << it << " ";
+    
+    return 0;
+}
